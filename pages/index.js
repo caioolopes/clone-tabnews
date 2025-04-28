@@ -1,8 +1,8 @@
 function Home() {
   return (
     <div>
-      <h1>VITORIA</h1>
-      <p>Eu amo você. Me desculpa ❤️😢</p>
+      <h1>teste</h1>
+      <p>deu certo</p>
     </div>
   );
 }
