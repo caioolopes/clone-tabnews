@@ -1,8 +1,8 @@
-import database from "../../../../infra/database.js";
+import database from "../../../../infra/database";
 
 async function status(request, response) {
-  const resulta = await database.query("select 1 + 1 as sum;");
-  console.log(resulta.rows);
+  const result = await database.query("select 1 + 1 as sum;");
+  console.log(result.rows);
   response.status(200).json({ chave: "São acima da media" });
 }
 
