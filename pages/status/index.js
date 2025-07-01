@@ -49,6 +49,7 @@ function DatabaseStatus() {
         </div>
       </>
     );
+
   }
   return (
     <>
@@ -56,4 +57,14 @@ function DatabaseStatus() {
       <div>{databaseStatusInformation}</div>
     </>
   );
+
+
+    return (
+      <>
+        <h2>Database</h2>
+        <div>{databaseStatusInformation}</div>
+      </>
+    );
+  }
+
 }
