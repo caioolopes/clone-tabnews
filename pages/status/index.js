@@ -52,7 +52,7 @@ function DatabaseStatus() {
   }
   return (
     <>
-      <h2>Database</h2>
+      <h2>DataBase</h2>
       <div>{databaseStatusInformation}</div>
     </>
   );
