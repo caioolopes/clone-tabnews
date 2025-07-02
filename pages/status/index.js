@@ -35,6 +35,11 @@ function DatabaseStatus() {
     refreshInterval: 2000,
   });
 
+  function DatabaseStatus() {
+  const { isLoading, data } = useSWR("/api/v1/status", fetchAPI, {
+    refreshInterval: 2000,
+  });
+
   let databaseStatusInformation = "Carregando...";
 
   if (!isLoading && data) {
@@ -50,6 +55,7 @@ function DatabaseStatus() {
       </>
     );
   }
+
   return (
     <>
       <h2>Database</h2>
@@ -57,3 +63,4 @@ function DatabaseStatus() {
     </>
   );
 }
+
