@@ -16,9 +16,9 @@ describe("POST /api/v1/user", () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: "emailduplicado1",
-          email: "duplicado@gmail.com",
-          password: "senha123",
+          username: "caioolopes",
+          email: "caio12oliveira11lopes@gmail.com",
+          password: "Sepol$220",
         }),
       });
 
@@ -28,9 +28,9 @@ describe("POST /api/v1/user", () => {
 
       expect(responseBody).toEqual({
         id: responseBody.id,
-        username: "emailduplicado1",
-        email: "duplicado@gmail.com",
-        password: "senha123",
+        username: "caioolopes",
+        email: "caio12oliveira11lopes@gmail.com",
+        password: "Sepol$220",
         created_at: responseBody.created_at,
         updated_at: responseBody.updated_at,
       });
@@ -38,7 +38,20 @@ describe("POST /api/v1/user", () => {
       expect(Date.parse(responseBody.created_at)).not.toBeNaN();
       expect(Date.parse(responseBody.updated_at)).not.toBeNaN();
     });
-    test("With Duplicated2 'email'", async () => {
+    test("With Duplicated 'email'", async () => {
+      const response1 = await fetch("http://localhost:3000/api/v1/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: "emailduplicado2",
+          email: "Duplicado1@gmail.com",
+          password: "senha123",
+        }),
+      });
+      expect(response1.status).toBe(201);
+
       const response2 = await fetch("http://localhost:3000/api/v1/users", {
         method: "POST",
         headers: {
@@ -46,7 +59,7 @@ describe("POST /api/v1/user", () => {
         },
         body: JSON.stringify({
           username: "emailduplicado2",
-          email: "Duplicado@gmail.com",
+          email: "Duplicado1@gmail.com",
           password: "senha123",
         }),
       });
