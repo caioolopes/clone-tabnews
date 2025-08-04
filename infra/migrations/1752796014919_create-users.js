@@ -6,7 +6,7 @@ exports.up = (pgm) => {
       default: pgm.func("gen_random_uuid()"),
     },
 
-    // For reference, GitHub liits usernames to 39 chatacters.
+    // For reference, GitHub limits usernames to 39 chatacters.
     username: {
       type: "varchar(30)",
       notNull: true,
@@ -18,20 +18,22 @@ exports.up = (pgm) => {
       notNull: true,
       unique: true,
     },
-    // whay 72 in length? https://security.stackexchange.com/a/39851
+    // whay 60 in length? https://www.npmjs.com/package/bcrypt#hash-info
     password: {
-      type: "varchar(72)",
+      type: "varchar(60)",
       notNull: true,
     },
-    //whay timestamp with timezone: https://justatheory.com/2012/04/postgres-use-timestamptz/
+    //whay timestamp with timezone? https://justatheory.com/2012/04/postgres-use-timestamptz/
     created_at: {
       type: "timestamptz",
-      default: pgm.func("now()"),
+      default: pgm.func("timezone('utc', now())"),
+      notNull: true,
     },
 
     updated_at: {
       type: "timestamptz",
-      default: pgm.func("now()"),
+      default: pgm.func("timezone('utc', now())"),
+      notNull: true,
     },
   });
 };
