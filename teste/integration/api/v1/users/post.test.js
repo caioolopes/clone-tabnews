@@ -59,14 +59,14 @@ describe("POST /api/v1/user", () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: "emailduplicado2",
+          username: "emailduplicado",
           email: "Duplicado1@gmail.com",
           password: "senha123",
         }),
       });
       expect(response1.status).toBe(201);
 
-      const response2 = await fetch("http://localhost:3000/api/v1/users", {
+      const response = await fetch("http://localhost:3000/api/v1/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -78,11 +78,11 @@ describe("POST /api/v1/user", () => {
         }),
       });
 
-      expect(response2.status).toBe(400);
+      expect(response.status).toBe(400);
 
-      const response2Body = await response2.json();
+      const responseBody = await response.json();
 
-      expect(response2Body).toEqual({
+      expect(responseBody).toEqual({
         name: "ValidationError",
         message: "O email informado já está sendo utilizado.",
         action: "Utilize outro email para realizar o cadastro.",
@@ -123,7 +123,7 @@ describe("POST /api/v1/user", () => {
       expect(response2Body).toEqual({
         name: "ValidationError",
         message: "O nome usuario informado já está sendo utilizado.",
-        action: "Utilize outro nome usuario para realizar o cadastro.",
+        action: "Utilize outro nome usuario para realizar esta operação.",
         status_code: 400,
       });
     });
