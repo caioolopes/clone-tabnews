@@ -2,7 +2,7 @@ function index() {
   return (
     <div>
       <h1>TEKNEWS</h1>
-      <p>Bem Vindo!</p>
+      <p>Bem-Vindo!</p>
     </div>
   );
 }
