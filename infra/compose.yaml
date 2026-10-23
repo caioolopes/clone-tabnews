@@ -12,3 +12,18 @@ services:
     ports:
       - "1025:1025"
       - "1080:1080"
+  database-test:
+    container_name: "postgres-test"
+    image: postgres:16-alpine3.22
+    env_file:
+      - ../.env.development
+    environment:
+      POSTGRES_DB: clone_tabnews_test
+    ports:
+      - "5433:5432"
+  mailcatcher-test:
+    container_name: "mailcatcher-test"
+    image: sj26/mailcatcher
+    ports:
+      - "1026:1025"
+      - "1081:1080"

@@ -12,17 +12,20 @@ beforeAll(async () => {
 describe("POST /api/v1/users", () => {
   describe("Anonymous user", () => {
     test("With unique and valid data", async () => {
-      const response = await fetch("http://localhost:3000/api/v1/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${orchestrator.webServerUrl}/api/v1/users`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: "filipedeschamps",
+            email: "contato@curso.dev",
+            password: "senha123",
+          }),
         },
-        body: JSON.stringify({
-          username: "filipedeschamps",
-          email: "contato@curso.dev",
-          password: "senha123",
-        }),
-      });
+      );
 
       expect(response.status).toBe(201);
 
@@ -58,31 +61,37 @@ describe("POST /api/v1/users", () => {
     });
 
     test("With duplicated 'email'", async () => {
-      const response1 = await fetch("http://localhost:3000/api/v1/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response1 = await fetch(
+        `${orchestrator.webServerUrl}/api/v1/users`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: "emailduplicado1",
+            email: "duplicado@curso.dev",
+            password: "senha123",
+          }),
         },
-        body: JSON.stringify({
-          username: "emailduplicado1",
-          email: "duplicado@curso.dev",
-          password: "senha123",
-        }),
-      });
+      );
 
       expect(response1.status).toBe(201);
 
-      const response2 = await fetch("http://localhost:3000/api/v1/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response2 = await fetch(
+        `${orchestrator.webServerUrl}/api/v1/users`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: "emailduplicado2",
+            email: "Duplicado@curso.dev",
+            password: "senha123",
+          }),
         },
-        body: JSON.stringify({
-          username: "emailduplicado2",
-          email: "Duplicado@curso.dev",
-          password: "senha123",
-        }),
-      });
+      );
 
       expect(response2.status).toBe(400);
 
@@ -97,31 +106,37 @@ describe("POST /api/v1/users", () => {
     });
 
     test("With duplicated 'username'", async () => {
-      const response1 = await fetch("http://localhost:3000/api/v1/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response1 = await fetch(
+        `${orchestrator.webServerUrl}/api/v1/users`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: "usernameduplicado",
+            email: "usernameduplicado1@curso.dev",
+            password: "senha123",
+          }),
         },
-        body: JSON.stringify({
-          username: "usernameduplicado",
-          email: "usernameduplicado1@curso.dev",
-          password: "senha123",
-        }),
-      });
+      );
 
       expect(response1.status).toBe(201);
 
-      const response2 = await fetch("http://localhost:3000/api/v1/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response2 = await fetch(
+        `${orchestrator.webServerUrl}/api/v1/users`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: "UsernameDuplicado",
+            email: "usernameduplicado2@curso.dev",
+            password: "senha123",
+          }),
         },
-        body: JSON.stringify({
-          username: "UsernameDuplicado",
-          email: "usernameduplicado2@curso.dev",
-          password: "senha123",
-        }),
-      });
+      );
 
       expect(response2.status).toBe(400);
 
