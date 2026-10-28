@@ -6,14 +6,9 @@ exports.up = (pgm) => {
       default: pgm.func("gen_random_uuid()"),
     },
 
-    used: {
-      type: "boolean",
-      notNull: true,
-      default: false,
-    },
-
     used_at: {
       type: "timestamptz",
+      notNull: false,
     },
 
     user_id: {
@@ -21,7 +16,6 @@ exports.up = (pgm) => {
       notNull: true,
     },
 
-    // Why timestamp with timezone? https://justatheory.com/2012/04/postgres-use-timestamptz/
     expires_at: {
       type: "timestamptz",
       notNull: true,
