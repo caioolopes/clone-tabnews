@@ -38,22 +38,23 @@ async function findOneValidByToken(sessionToken) {
 
 async function create(userId) {
   const token = crypto.randomBytes(48).toString("hex");
-  const expiresAt = new Date(Date.now() + EXPIRATION_IN_MILLISECONDS);
+  const createdAt = new Date();
+  const expiresAt = new Date(createdAt.getTime() + EXPIRATION_IN_MILLISECONDS);
 
-  const newSession = await runInsertQuery(token, userId, expiresAt);
+  const newSession = await runInsertQuery(token, userId, expiresAt, createdAt);
   return newSession;
 
-  async function runInsertQuery(token, userId, expiresAt) {
+  async function runInsertQuery(token, userId, expiresAt, createdAt) {
     const results = await database.query({
       text: `
         INSERT INTO
-          sessions (token, user_id, expires_at)
+          sessions (token, user_id, expires_at, created_at, updated_at)
         VALUES
-          ($1, $2, $3)
+          ($1, $2, $3, $4, $4)
         RETURNING
           *
       ;`,
-      values: [token, userId, expiresAt],
+      values: [token, userId, expiresAt, createdAt],
     });
 
     return results.rows[0];
@@ -61,25 +62,30 @@ async function create(userId) {
 }
 
 async function renew(sessionId) {
-  const expiresAt = new Date(Date.now() + EXPIRATION_IN_MILLISECONDS);
+  const updatedAt = new Date();
+  const expiresAt = new Date(updatedAt.getTime() + EXPIRATION_IN_MILLISECONDS);
 
-  const renewedSessionObject = await runUpdateQuery(sessionId, expiresAt);
+  const renewedSessionObject = await runUpdateQuery(
+    sessionId,
+    expiresAt,
+    updatedAt,
+  );
   return renewedSessionObject;
 
-  async function runUpdateQuery(sessionId, expiresAt) {
+  async function runUpdateQuery(sessionId, expiresAt, updatedAt) {
     const results = await database.query({
       text: `
         UPDATE
           sessions
         SET
           expires_at = $2,
-          updated_at = NOW()
+          updated_at = $3
         WHERE
           id = $1
         RETURNING
           *
         ;`,
-      values: [sessionId, expiresAt],
+      values: [sessionId, expiresAt, updatedAt],
     });
 
     return results.rows[0];

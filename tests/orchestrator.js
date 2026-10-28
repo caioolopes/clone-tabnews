@@ -7,6 +7,7 @@ import user from "models/user.js";
 import session from "models/session.js";
 
 const emailHttpUrl = `http://${process.env.EMAIL_HTTP_HOST}:${process.env.EMAIL_HTTP_PORT}`;
+const webServerUrl = process.env.TEST_BASE_URL || "http://localhost:3000";
 
 async function waitForAllServices() {
   await waitForWebServer();
@@ -19,7 +20,7 @@ async function waitForAllServices() {
     });
 
     async function fetchStatusPage() {
-      const response = await fetch("http://localhost:3000/api/v1/status");
+      const response = await fetch(`${webServerUrl}/api/v1/status`);
 
       if (response.status !== 200) {
         throw Error();
@@ -75,6 +76,10 @@ async function getLastEmail() {
   const emailListBody = await emailListResponse.json();
   const lastEmailItem = emailListBody.pop();
 
+  if (!lastEmailItem) {
+    return null;
+  }
+
   const emailTextResponse = await fetch(
     `${emailHttpUrl}/messages/${lastEmailItem.id}.plain`,
   );
@@ -84,7 +89,13 @@ async function getLastEmail() {
   return lastEmailItem;
 }
 
+function extractUUID(text) {
+  const match = text.match(/[0-9a-fA-F-]{36}/);
+  return match ? match[0] : null;
+}
+
 const orchestrator = {
+  webServerUrl,
   waitForAllServices,
   clearDatabase,
   runPendingMigrations,
@@ -92,6 +103,7 @@ const orchestrator = {
   createSession,
   deleteAllEmails,
   getLastEmail,
+  extractUUID,
 };
 
 export default orchestrator;

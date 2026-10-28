@@ -16,16 +16,19 @@ describe("POST /api/v1/sessions", () => {
         password: "senha-correta",
       });
 
-      const response = await fetch("http://localhost:3000/api/v1/sessions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${orchestrator.webServerUrl}/api/v1/sessions`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: "email.errado@curso.dev",
+            password: "senha-correta",
+          }),
         },
-        body: JSON.stringify({
-          email: "email.errado@curso.dev",
-          password: "senha-correta",
-        }),
-      });
+      );
 
       expect(response.status).toBe(401);
 
@@ -44,16 +47,19 @@ describe("POST /api/v1/sessions", () => {
         email: "email.correto@curso.dev",
       });
 
-      const response = await fetch("http://localhost:3000/api/v1/sessions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${orchestrator.webServerUrl}/api/v1/sessions`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: "email.correto@curso.dev",
+            password: "senha-incorreta",
+          }),
         },
-        body: JSON.stringify({
-          email: "email.correto@curso.dev",
-          password: "senha-incorreta",
-        }),
-      });
+      );
 
       expect(response.status).toBe(401);
 
@@ -70,16 +76,19 @@ describe("POST /api/v1/sessions", () => {
     test("With incorrect `email` and incorrect `password`", async () => {
       await orchestrator.createUser();
 
-      const response = await fetch("http://localhost:3000/api/v1/sessions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${orchestrator.webServerUrl}/api/v1/sessions`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: "email.incorreto@curso.dev",
+            password: "senha-incorreta",
+          }),
         },
-        body: JSON.stringify({
-          email: "email.incorreto@curso.dev",
-          password: "senha-incorreta",
-        }),
-      });
+      );
 
       expect(response.status).toBe(401);
 
@@ -99,16 +108,19 @@ describe("POST /api/v1/sessions", () => {
         password: "tudocorreto",
       });
 
-      const response = await fetch("http://localhost:3000/api/v1/sessions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${orchestrator.webServerUrl}/api/v1/sessions`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: "tudo.correto@curso.dev",
+            password: "tudocorreto",
+          }),
         },
-        body: JSON.stringify({
-          email: "tudo.correto@curso.dev",
-          password: "tudocorreto",
-        }),
-      });
+      );
 
       expect(response.status).toBe(201);
 

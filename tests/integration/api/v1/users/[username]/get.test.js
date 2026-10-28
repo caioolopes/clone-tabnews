@@ -15,7 +15,7 @@ describe("GET /api/v1/users/[username]", () => {
       });
 
       const response = await fetch(
-        "http://localhost:3000/api/v1/users/MesmoCase",
+        `${orchestrator.webServerUrl}/api/v1/users/MesmoCase`,
       );
 
       expect(response.status).toBe(200);
@@ -43,7 +43,7 @@ describe("GET /api/v1/users/[username]", () => {
       });
 
       const response = await fetch(
-        "http://localhost:3000/api/v1/users/casediferente",
+        `${orchestrator.webServerUrl}/api/v1/users/casediferente`,
       );
 
       expect(response.status).toBe(200);
@@ -67,7 +67,7 @@ describe("GET /api/v1/users/[username]", () => {
 
     test("With nonexistent username", async () => {
       const response = await fetch(
-        "http://localhost:3000/api/v1/users/UsuarioInexistente",
+        `${orchestrator.webServerUrl}/api/v1/users/UsuarioInexistente`,
       );
 
       expect(response.status).toBe(404);
